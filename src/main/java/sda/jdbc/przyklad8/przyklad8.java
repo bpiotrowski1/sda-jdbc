@@ -1,3 +1,9 @@
+/*
+ * przyklad8
+ * Przyklad pokazuje prosty CRUD.Pobierany jest jeden rekord z tabeli ksiązki, Jego id przekazane w nastepnej operacji Insert.
+ * Na koncu usuwamy nadmiarowe rekordy w tabeli uzytkownicy.
+ * */
+
 package sda.jdbc.przyklad8;
 
 import sda.jdbc.przyklad8.Ksiazka;
