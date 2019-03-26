@@ -1,16 +1,19 @@
 /*
- * przyklad3
- * Przyklad pokazuje jak podlaczyc sie do bazy danych, wykonac zapytanie SELECT z parametrem
- * wykozystujac interface PreparedStatement i wyswietla wynik na konsoli.
- * Przyklad pokazuje wykozystanie metody excecuteQuery().
+ * przyklad7
+ * Przyklad pokazuje jak nie robic parametryzacji. Jesli podamy w parametrze odpowiedni spreparowane dane,
+ * to uzyskamy nieautoryzowany dostęp do danych. W takich sytuacjach dopuszczamy do sql injection-
+ * wstrzykiwanie zlosliwego kodu.
  * */
 
 package sda.jdbc;
 
 import java.sql.*;
 
-public class przyklad3 {
+public class przyklad7 {
+    private static String sqlSelect = "SELECT * FROM ksiazka WHERE id=";
+
     public static void main(String arg[]) {
+        String parametr = "3"; // jak wstawimy jako parametr "3 OR 1=1" to mamy sqlInjection
         Connection connection = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -18,8 +21,8 @@ public class przyklad3 {
             String user = "sdatest";
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement preStmt = connection.prepareStatement("SELECT * FROM ksiazka WHERE tytul like \"%\" ? \"%\";");
-            preStmt.setString(1, "Java");
+            PreparedStatement preStmt = connection.prepareStatement(sqlSelect + parametr);
+
             ResultSet resultSet = preStmt.executeQuery();
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
