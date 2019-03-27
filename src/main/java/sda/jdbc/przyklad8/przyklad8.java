@@ -11,21 +11,24 @@ import sda.jdbc.przyklad8.Ksiazka;
 import java.sql.*;
 
 public class przyklad8 {
-    private static String sqlSelect = "SELECT * FROM ksiazka WHERE tytul='Java. Techniki zaawansowane.'";
-    private static String sqlInsert = "INSERT INTO zakupy" +
+    private final static String sqlSelect = "SELECT * FROM ksiazka WHERE tytul='Java. Techniki zaawansowane.'";
+    private final static String sqlInsert = "INSERT INTO zakupy" +
             "(`iduzytkownik`,`idksiazki`)" +
             " VALUES (?,?)";
-    private static String sqlDelete ="DELETE FROM uzytkownik WHERE id>10";
+    private final static String sqlDelete = "DELETE FROM uzytkownik WHERE id>10";
+
     public static void main(String arg[]) {
 
         Connection connection = null;
+        Statement stmt = null;
+        PreparedStatement preStmt = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
-            Statement stmt = connection.createStatement();
+            stmt = connection.createStatement();
 
             ResultSet resultSet = stmt.executeQuery(sqlSelect);
             Ksiazka ksiazkaDB = new Ksiazka();
@@ -35,11 +38,11 @@ public class przyklad8 {
             }
             System.out.println("pobrano ksiazke o tytule: Java. Techniki zaawansowane.");
 
-            PreparedStatement preStmt = connection.prepareStatement(sqlInsert);
-            preStmt.setInt(1,3);
-            preStmt.setInt(2,ksiazkaDB.getId());
-            int result=preStmt.executeUpdate();
-            System.out.println("dodano rekordow: "+result);
+            preStmt = connection.prepareStatement(sqlInsert);
+            preStmt.setInt(1, 3);
+            preStmt.setInt(2, ksiazkaDB.getId());
+            int result = preStmt.executeUpdate();
+            System.out.println("dodano rekordow: " + result);
 
             stmt.executeUpdate(sqlDelete);
             System.out.println("usunieto rekordy w tabeli uzystkownicy z id>10");
@@ -48,6 +51,16 @@ public class przyklad8 {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                preStmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             try {
                 connection.close();
             } catch (SQLException e) {

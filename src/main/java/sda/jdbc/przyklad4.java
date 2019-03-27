@@ -12,13 +12,14 @@ import java.sql.*;
 public class przyklad4 {
     public static void main(String arg[]) {
         Connection connection = null;
+        PreparedStatement preStmt = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement preStmt = connection.prepareStatement("SELECT * FROM ksiazka WHERE tytul like \"%\" ? \"%\"");
+            preStmt = connection.prepareStatement("SELECT * FROM ksiazka WHERE tytul like \"%\" ? \"%\"");
             preStmt.setString(1, "Java");
             boolean isResultSet = preStmt.execute();
             if (isResultSet) {
@@ -34,6 +35,11 @@ public class przyklad4 {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                preStmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             try {
                 connection.close();
             } catch (SQLException e) {

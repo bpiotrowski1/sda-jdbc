@@ -16,13 +16,14 @@ public class przyklad5 {
 
     public static void main(String arg[]) {
         Connection connection = null;
+        PreparedStatement preStmt = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement preStmt = connection.prepareStatement(sqlUpdate);
+            preStmt = connection.prepareStatement(sqlUpdate);
             preStmt.setString(1, "13");
             preStmt.setString(2, "Gdańsk");
             int countUpdateRecords = preStmt.executeUpdate();
@@ -36,6 +37,11 @@ public class przyklad5 {
                 SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                preStmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             try {
                 connection.close();
             } catch (SQLException e) {

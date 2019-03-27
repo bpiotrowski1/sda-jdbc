@@ -11,13 +11,14 @@ import java.sql.*;
 public class przyklad2 {
     public static void main(String arg[]) {
         Connection connection = null;
+        Statement stmt = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
-            Statement stmt = connection.createStatement();
+            stmt = connection.createStatement();
             ResultSet resultSet = stmt.executeQuery("SELECT * FROM autor;");
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
@@ -30,6 +31,11 @@ public class przyklad2 {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             try {
                 connection.close();
             } catch (SQLException e) {

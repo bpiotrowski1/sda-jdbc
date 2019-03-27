@@ -1,27 +1,28 @@
 /*
- * przyklad9
- * Przyklad pokazuje pobieranie danych z bazy danych, wrzucenie ich do listy obiektów i manipulacja na stworzonej liscie.
+ * przyklad10
+ * Przyklad pokazuje zastosowanie try-with-resources, automatycznie zamykane są Connection i Statement.
  * */
 
-package sda.jdbc.przyklad9;
+package sda.jdbc;
+
+import sda.jdbc.przyklad9.Ksiazka;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class przyklad9 {
+public class przyklad10 {
     private final static String sqlSelect = "SELECT * FROM ksiazka ";
 
     public static void main(String arg[]) {
         ArrayList<Ksiazka> ksiazki = new ArrayList<Ksiazka>();
-        Connection connection = null;
-        Statement stmt = null;
-        try {
+
+        String url = "jdbc:mysql://localhost:3306/ksiegarnia";
+        String user = "sdatest";
+        String password = "Start123!";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement stmt = connection.createStatement();) {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/ksiegarnia";
-            String user = "sdatest";
-            String password = "Start123!";
-            connection = DriverManager.getConnection(url, user, password);
-            stmt = connection.createStatement();
 
             ResultSet resultSet = stmt.executeQuery(sqlSelect);
             while (resultSet.next()) {
@@ -34,17 +35,6 @@ public class przyklad9 {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         System.out.println("Dane o pobranych ksiazkach. Pobrano " + ksiazki.size() + " ksiazek.");
         System.out.println("Lista ksiazek w bazie danych: ");
