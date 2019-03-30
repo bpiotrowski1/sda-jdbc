@@ -18,7 +18,6 @@ public class przyklad5 {
         Connection connection = null;
         PreparedStatement preStmt = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
@@ -30,11 +29,7 @@ public class przyklad5 {
 
             System.out.println("zaktualizowano " + countUpdateRecords + " rekordow");
 
-        } catch (
-                ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {

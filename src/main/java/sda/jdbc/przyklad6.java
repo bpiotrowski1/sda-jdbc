@@ -21,7 +21,6 @@ public class przyklad6 {
         Connection connection = null;
         PreparedStatement preStmt = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
@@ -33,11 +32,7 @@ public class przyklad6 {
                 preStmt.execute();
             }
 
-        } catch (
-                ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (
-                SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {

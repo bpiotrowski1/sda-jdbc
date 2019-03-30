@@ -22,7 +22,6 @@ public class przyklad10 {
 
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement stmt = connection.createStatement();) {
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
             ResultSet resultSet = stmt.executeQuery(sqlSelect);
             while (resultSet.next()) {
@@ -31,8 +30,6 @@ public class przyklad10 {
                 ksiazkaDB.setTytul(resultSet.getString("tytul"));
                 ksiazki.add(ksiazkaDB);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
