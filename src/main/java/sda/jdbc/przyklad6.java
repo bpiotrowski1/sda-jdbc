@@ -26,14 +26,22 @@ public class przyklad6 {
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
             preStmt = connection.prepareStatement(sqlInsert);
+            connection.setAutoCommit(false);
+
             for (int i = 0; i < 5; i++) {
                 preStmt.setString(1, "Jan");
                 preStmt.setString(2, nazwiska[i]);
                 preStmt.execute();
             }
+            connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
         } finally {
             try {
                 preStmt.close();
