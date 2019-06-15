@@ -19,10 +19,11 @@ public class przyklad1 {
             String password = "Start123!";
             connection = DriverManager.getConnection(url, user, password);
             stmt = connection.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT count(*) FROM autor;");
+            ResultSet resultSet = stmt.executeQuery("SELECT imie, nazwisko FROM uzytkownik");
             while (resultSet.next()) {
-                Integer countRecord = resultSet.getInt(1);
-                System.out.println("liczba rekordow w tabeli autor: " + countRecord);
+                String imie = resultSet.getString("imie");
+                String nazwisko = resultSet.getString("nazwisko");
+                System.out.println("pobrano uzytkownika: " + imie + " " + nazwisko);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
