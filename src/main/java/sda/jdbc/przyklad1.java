@@ -9,11 +9,11 @@ package sda.jdbc;
 import java.sql.*;
 
 public class przyklad1 {
-    public static void main(String arg[]) {
+    public static void main(String[] arg) {
         Connection connection = null;
         Statement stmt = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            //Class.forName("com.mysql.cj.jdbc.Driver");    dla starych wersji
             String url = "jdbc:mysql://localhost:3306/ksiegarnia";
             String user = "sdatest";
             String password = "Start123!";
@@ -25,8 +25,6 @@ public class przyklad1 {
                 String nazwisko = resultSet.getString("nazwisko");
                 System.out.println("pobrano uzytkownika: " + imie + " " + nazwisko);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
