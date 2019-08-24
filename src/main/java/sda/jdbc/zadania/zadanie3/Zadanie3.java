@@ -2,24 +2,24 @@ package sda.jdbc.zadania.zadanie3;
 
 public class Zadanie3 {
     public static void main(String[] args) {
-        final DataAccessObject dataAccessObject = new DataAccessObject();
+        final DAOKsiazka daoKsiazka = new DAOKsiazka();
 
         //1
-        dataAccessObject.getAllBooks();
+        daoKsiazka.getAllBooks();
 
         //2
-        dataAccessObject.newBooks("Tytul 1");
-        dataAccessObject.newBooks("Tytul 2");
-        dataAccessObject.newBooks("Tytul 3");
-        dataAccessObject.newBooks("Tytul 4");
-        dataAccessObject.getAllBooks();
+        daoKsiazka.newBooks("Tytul 1");
+        daoKsiazka.newBooks("Tytul 2");
+        daoKsiazka.newBooks("Tytul 3");
+        daoKsiazka.newBooks("Tytul 4");
+        daoKsiazka.getAllBooks();
 
         //3
-        dataAccessObject.updateById(dataAccessObject.getLastId(), "naklad wyczerpany");
-        dataAccessObject.getAllBooks();
+        daoKsiazka.updateById(daoKsiazka.getLastId(), "naklad wyczerpany");
+        daoKsiazka.getAllBooks();
 
         //4
-        dataAccessObject.deleteById(dataAccessObject.getLastId());
-        dataAccessObject.getAllBooks();
+        daoKsiazka.deleteById(daoKsiazka.getLastId());
+        daoKsiazka.getAllBooks();
     }
 }

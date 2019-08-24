@@ -2,7 +2,7 @@ package sda.jdbc.zadania.zadanie3;
 
 import java.sql.*;
 
-class DataAccessObject {
+class DAOKsiazka {
     private String url = DBProperties.getUrl();
     private String user = DBProperties.getUser();
     private String password = DBProperties.getPassword();
