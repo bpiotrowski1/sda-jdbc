@@ -12,9 +12,7 @@ import java.sql.*;
 
 public class przyklad8 {
     private final static String sqlSelect = "SELECT * FROM ksiazka WHERE tytul='Java. Techniki zaawansowane.'";
-    private final static String sqlInsert = "INSERT INTO zakupy" +
-            "(`iduzytkownik`,`idksiazki`)" +
-            " VALUES (?,?)";
+    private final static String sqlInsert = "INSERT INTO zakupy (iduzytkownik, idksiazki) VALUES (?,?)";
     private final static String sqlDelete = "DELETE FROM uzytkownik WHERE id>10";
 
     public static void main(String arg[]) {
