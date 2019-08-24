@@ -7,16 +7,20 @@ public class DAOAutor {
     private String user = DBProperties.getUser();
     private String password = DBProperties.getPassword();
 
-    void newAuthor(String imie, String nazwisko) {
+    int newAuthor(String imie, String nazwisko) {
         try(Connection connection = DriverManager.getConnection(url, user, password)) {
             final String sqlInsert = "INSERT INTO autor (imie, nazwisko) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, imie);
             preparedStatement.setString(2, nazwisko);
             preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     int getLastId() {

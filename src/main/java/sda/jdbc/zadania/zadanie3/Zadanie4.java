@@ -7,12 +7,10 @@ public class Zadanie4 {
         DAOKsiazkaAutor daoKsiazkaAutor = new DAOKsiazkaAutor();
 
         //1
-        daoKsiazka.newBooks("Nowa ksiazka");
-        int idNowejKsiazki = daoKsiazka.getLastId();
+        int idNowejKsiazki = daoKsiazka.newBooks("Nowa ksiazka");
 
         //2
-        daoAutor.newAuthor("Nowy", "Autor");
-        int idNowegoAutora = daoAutor.getLastId();
+        int idNowegoAutora = daoAutor.newAuthor("Nowy", "Autor");
         daoKsiazkaAutor.newKsiazkaAutor(idNowejKsiazki, idNowegoAutora);
 
         //3

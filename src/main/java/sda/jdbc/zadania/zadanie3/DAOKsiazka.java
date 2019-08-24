@@ -21,15 +21,19 @@ class DAOKsiazka {
         return null;
     }
 
-    void newBooks(String tytul) {
+    int newBooks(String tytul) {
         try(Connection connection = DriverManager.getConnection(url, user, password)) {
             final String sqlInsert = "INSERT INTO ksiazka(tytul) VALUES (?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert);
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, tytul);
             preparedStatement.executeUpdate();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            generatedKeys.next();
+            return generatedKeys.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     void updateById(int id, String tytul) {
