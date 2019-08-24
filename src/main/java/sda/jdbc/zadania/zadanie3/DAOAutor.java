@@ -23,19 +23,6 @@ public class DAOAutor {
         return -1;
     }
 
-    int getLastId() {
-        try(Connection connection = DriverManager.getConnection(url, user, password)) {
-            final String sqlSelectLastId = "SELECT max(id) FROM autor";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlSelectLastId);
-            resultSet.next();
-            return resultSet.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
     void getBooksById(int id) {
         try(Connection connection = DriverManager.getConnection(url, user, password)) {
             final String sqlSelect = "SELECT tytul FROM ksiazka k, autor_ksiazka a WHERE k.id = a.ksiazka AND a.idautor=?";
