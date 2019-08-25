@@ -6,14 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DAOKsiazkaAutor {
-    private String url = DBProperties.getUrl();
-    private String user = DBProperties.getUser();
-    private String password = DBProperties.getPassword();
+    private final String sqlInsert = "INSERT INTO autor_ksiazka VALUES (?, ?)";
 
     void newKsiazkaAutor(int idKsiazki, int idAutora) {
-        try(Connection connection = DriverManager.getConnection(url, user, password)) {
-            final String sqlInsert = "INSERT INTO autor_ksiazka VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert);
+        try(Connection connection = DriverManager.getConnection(DBProperties.getUrl(), DBProperties.getUser(), DBProperties.getPassword());
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
             preparedStatement.setInt(1, idAutora);
             preparedStatement.setInt(2, idKsiazki);
             preparedStatement.executeUpdate();
